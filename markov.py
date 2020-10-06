@@ -10,18 +10,9 @@ def open_and_read_file(file_path):
     the file's contents as one string of text.
     """
 
-    text = open(file_path)
-    textstr = ''
-    
-    for line in text:
+    text = open(file_path).read().replace('\n', ' ').rstrip(' ')
 
-        # Strip new-line mark at the end of each line
-        line = line.rstrip('\n')
-        textstr += line + ' '
-
-    textstr = textstr.rstrip(' ')
-
-    return textstr
+    return text
 
 
 def make_chains(text_string):
