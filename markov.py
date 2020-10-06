@@ -10,6 +10,7 @@ def open_and_read_file(file_path):
     the file's contents as one string of text.
     """
 
+    # strip newline at the end of each line and replace with a space to make textfile into one single string
     text = open(file_path).read().replace('\n', ' ').rstrip(' ')
 
     return text
@@ -43,12 +44,16 @@ def make_chains(text_string):
     chains = {}
     words = text_string.split(' ')
 
+    # Iterate over list of words until 3rd-to-last word
     for i in range(len(words) - 2):
 
+        # If (word1, word2) already exists as a key in chains
         if (words[i], words[i+1]) in chains:
-            chains[(words[i], words[i+1])].append(words[i+2])
+            # Append the next word (words[i + 2]) to the value list
+            chains[(words[i], words[i + 1])].append(words[i + 2])
         else:
-            chains[(words[i], words[i+1])] = [words[i+2]]
+            # Else, initialize key and add next word as first item of value list
+            chains[(words[i], words[i + 1])] = [words[i + 2]]
 
     return chains
 
@@ -56,19 +61,28 @@ def make_chains(text_string):
 def make_text(chains):
     """Return text from chains."""
 
+    # Choose a random key (tuple)
     current_key = choice(list(chains))
+
+    # Initialize words (list) with the 2 words in current_key
     words = list(current_key)
 
+    # Repeat until current_key is non-existant in chains
     while current_key in chains:
 
+        # Choose a random word from current_key's value (list)    
         next_word = choice(chains[current_key])
+
+        # Append the random word to words (list)
         words.append(next_word)
+
+        # Update current_key
         current_key = (current_key[1], next_word)
 
     return ' '.join(words)
 
 
-input_path = 'green-eggs.txt'
+input_path = 'gettysburg.txt'
 
 # Open the file and turn it into one long string
 input_text = open_and_read_file(input_path)
