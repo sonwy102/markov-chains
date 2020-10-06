@@ -10,11 +10,14 @@ def open_and_read_file(file_path):
     the file's contents as one string of text.
     """
 
-    # your code goes here
     text = open(file_path)
-    text = text.rstrip()
+    textstr = ''
+    
+    for line in text:
+        line = line.rstrip('\n')
+        textstr += line
 
-    return text
+    return textstr
 
 
 def make_chains(text_string):
