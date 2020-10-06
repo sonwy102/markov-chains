@@ -17,7 +17,9 @@ def open_and_read_file(file_path):
 
         # Strip new-line mark at the end of each line
         line = line.rstrip('\n')
-        textstr += ' ' + line
+        textstr += line + ' '
+
+    textstr = textstr.rstrip(' ')
 
     return textstr
 
@@ -48,8 +50,14 @@ def make_chains(text_string):
     """
 
     chains = {}
+    words = text_string.split(' ')
 
-    # your code goes here
+    for i in range(len(words) - 1):
+
+        if (words[i], words[i+1]) in chains:
+            chains[(words[i], words[i+1])].append(words[i+2])
+        else:
+            chains[(words[i], words[i+1])] =  [None]
 
     return chains
 
