@@ -43,12 +43,12 @@ def make_chains(text_string):
     chains = {}
     words = text_string.split(' ')
 
-    for i in range(len(words) - 1):
+    for i in range(len(words) - 2):
 
         if (words[i], words[i+1]) in chains:
             chains[(words[i], words[i+1])].append(words[i+2])
         else:
-            chains[(words[i], words[i+1])] =  [None]
+            chains[(words[i], words[i+1])] = [words[i+2]]
 
     return chains
 
@@ -56,9 +56,14 @@ def make_chains(text_string):
 def make_text(chains):
     """Return text from chains."""
 
-    words = []
+    current_key = choice(list(chains))
+    words = list(current_key)
 
-    # your code goes here
+    while current_key in chains:
+
+        next_word = choice(chains[current_key])
+        words.append(next_word)
+        current_key = (current_key[1], next_word)
 
     return ' '.join(words)
 
