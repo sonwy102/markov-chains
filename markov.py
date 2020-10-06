@@ -14,6 +14,8 @@ def open_and_read_file(file_path):
     textstr = ''
     
     for line in text:
+
+        # Strip new-line mark at the end of each line
         line = line.rstrip('\n')
         textstr += line
 
