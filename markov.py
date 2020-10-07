@@ -17,7 +17,7 @@ def open_and_read_file(file_path):
     return text
 
 
-def make_chains(text_string):
+def make_chains(text_string, n):
     """Take input text as string; return dictionary of Markov chains.
 
     A chain will be a key that consists of a tuple of (word1, word2)
@@ -45,16 +45,19 @@ def make_chains(text_string):
     chains = {}
     words = text_string.split(' ')
 
-    # Iterate over list of words until 3rd-to-last word
-    for i in range(len(words) - 2):
+    # Iterate over list of words
+    for i in range(len(words) - n):
 
-        # If (word1, word2) already exists as a key in chains
-        if (words[i], words[i+1]) in chains:
+        # Create n-gram
+        n_gram = tuple([words[j] for j in range(i, i + n)])
+        
+        # If n-gram already exists as a key in chains
+        if n_gram in chains:
             # Append the next word (words[i + 2]) to the value list
-            chains[(words[i], words[i + 1])].append(words[i + 2])
+            chains[n_gram].append(words[i + n])
         else:
             # Else, initialize key and add next word as first item of value list
-            chains[(words[i], words[i + 1])] = [words[i + 2]]
+            chains[n_gram] = [words[i + n]]
 
     return chains
 
@@ -64,8 +67,8 @@ def make_text(chains):
 
     # Choose a random key (tuple)
     current_key = choice(list(chains))
-
-    # Initialize words (list) with the 2 words in current_key
+    
+    # Initialize words (list) with the words in current_key
     words = list(current_key)
 
     # Repeat until current_key is non-existant in chains
@@ -78,17 +81,16 @@ def make_text(chains):
         words.append(next_word)
 
         # Update current_key
-        current_key = (current_key[1], next_word)
+        current_key = tuple(list(current_key[j] for j in range(1, len(current_key))) + [next_word])
 
     return ' '.join(words)
 
 
-
-# Open the file and turn it into one long string
+# Open the file provided as command-line argument and turn it into one long string
 input_text = open_and_read_file(argv[1])
 
 # Get a Markov chain
-chains = make_chains(input_text)
+chains = make_chains(input_text, 4)
 
 # Produce random text
 random_text = make_text(chains)
