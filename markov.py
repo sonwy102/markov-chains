@@ -66,7 +66,11 @@ def make_text(chains):
     """Return text from chains."""
 
     # Choose a random key (tuple)
-    current_key = choice(list(chains))
+    initial_key = choice(list(chains))
+    while initial_key[0][0].islower():
+        initial_key = choice(list(chains))
+
+    current_key = initial_key
     
     # Initialize words (list) with the words in current_key
     words = list(current_key)
