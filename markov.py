@@ -18,11 +18,11 @@ def open_and_read_file(file_path):
 
 
 def make_chains(text_string, n):
-    """Take input text as string; return dictionary of Markov chains.
+    """Take input text as string and size of desired n-gram as int; return dictionary of Markov chains.
 
-    A chain will be a key that consists of a tuple of (word1, word2)
-    and the value would be a list of the word(s) that follow those two
-    words in the input text.
+    A chain will be a key that consists of a tuple of (word1, word2, .. word_n)
+    and the value would be a list of the word(s) that follow those words
+    in the input text.
 
     For example:
 
