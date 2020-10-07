@@ -65,12 +65,12 @@ def make_chains(text_string, n):
 def make_text(chains):
     """Return text from chains."""
 
-    # Choose a random key (tuple)
-    initial_key = choice(list(chains))
-    while initial_key[0][0].islower():
-        initial_key = choice(list(chains))
+    # Choose a initial random key (tuple)
+    current_key = choice(list(chains))
 
-    current_key = initial_key
+    # Repeat searching for initial key until its first word is capitalized
+    while not current_key[0][0].isupper():
+        current_key = choice(list(chains))
     
     # Initialize words (list) with the words in current_key
     words = list(current_key)
@@ -94,7 +94,7 @@ def make_text(chains):
 input_text = open_and_read_file(argv[1])
 
 # Get a Markov chain
-chains = make_chains(input_text, 4)
+chains = make_chains(input_text, 2)
 
 # Produce random text
 random_text = make_text(chains)
